@@ -1,0 +1,15 @@
+(define (estruct? l1 l2)
+  
+  (define boool #f)
+  (define str "")
+  
+  (cond ((AND(null? l1)(null? l2)) (SET! boool #t) boool) ;;both empty? equal
+        ((OR(null? l1)(null? l2)) (SET! boool #f) boool)  ;;one empty? not equal
+        ((AND(symbol? (car l1))(symbol? (car l2))) (estruct? (cdr l1) (cdr l2)))  ;;both atoms? keep looking
+        ((OR(symbol? (car l1))(symbol? (car l2))) (SET! boool #f) boool) ;;one sublist? not equal
+        (ELSE (AND(estruct? (car l1) (car l2))(estruct? (cdr l1) (cdr l2))))  ;;both sublists? look inside ;;both sublists? look next
+  )
+)
+(define array1 '((a b (d g))))
+(define array2 '((c d (e k))))
+(estruct? array1 array2)
